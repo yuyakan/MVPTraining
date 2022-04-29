@@ -15,8 +15,6 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     var repo: [[String: Any]]=[]
     
     var task: URLSessionTask?
-    var inpTxt: String!
-    var url: String!
     var tblIdx: Int!
     
     override func viewDidLoad() {
@@ -34,38 +32,38 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        task?.cancel()
+        if let task = task {
+            task.cancel()
+        }
     }
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        inpTxt = searchBar.text!
-        if inpTxt.count == 0 {
-            return;
-        }
+        guard let inpTxt = searchBar.text else { return }
+        if inpTxt.count == 0 { return }
         
-        url = "https://api.github.com/search/repositories?q=\(inpTxt!)"
-        task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
-            let obj = try! JSONSerialization.jsonObject(with: data!) as? [String: Any]
-            if obj == nil{
-                return;
-            }
+        guard let url = URL(string: "https://api.github.com/search/repositories?q=\(inpTxt)") else { return }
+        task = URLSession.shared.dataTask(with: url) { (data, res, err) in
+            guard let data = data else { return }
+            guard let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return }
             
-            if let items = obj!["items"] as? [[String: Any]] {
+            if let items = obj["items"] as? [[String: Any]] {
                 self.repo = items
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
             }
         }
-    // これ呼ばなきゃリストが更新されません
-    task?.resume()
+        // これ呼ばなきゃリストが更新されません
+        if let task = task {
+            task.resume()
+        }
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Detail"{
-            let dtl = segue.destination as! ViewController2
+        if segue.identifier != "Detail"{ return }
+        if let dtl = segue.destination as? ViewController2 {
             dtl.vc1 = self
         }
     }

@@ -47,13 +47,17 @@ class ViewController2: UIViewController {
             return;
         }
         
-        if let imgURL = owner!["avatar_url"] as? String {
-            URLSession.shared.dataTask(with: URL(string: imgURL)!) { (data, res, err) in
-                let img = UIImage(data: data!)!
+        guard let imgURL = owner?["avatar_url"] as? String else { return }
+        guard let existImgURL = URL(string: imgURL) else { return }
+        URLSession.shared.dataTask(with: existImgURL) { (data, res, err) in
+            
+            guard let data = data else { return }
+            if let img = UIImage(data: data){
                 DispatchQueue.main.async {
                     self.ImgView.image = img
                 }
-            }.resume()
-        }
+            }
+            
+        }.resume()
     }
 }
