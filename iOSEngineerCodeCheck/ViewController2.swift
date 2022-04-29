@@ -26,7 +26,7 @@ class ViewController2: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let repo = vc1.repo[vc1.idx]
+        let repo = vc1.repo[vc1.tblIdx]
         
         LangLbl.text = "Written in \(repo["language"] as? String ?? "")"
         StrsLbl.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
@@ -34,26 +34,26 @@ class ViewController2: UIViewController {
         FrksLbl.text = "\(repo["forks_count"] as? Int ?? 0) forks"
         IsssLbl.text = "\(repo["open_issues_count"] as? Int ?? 0) open issues"
         getImage()
-        
     }
     
+    
     func getImage(){
-        
-        let repo = vc1.repo[vc1.idx]
+        let repo = vc1.repo[vc1.tblIdx]
         
         TtlLbl.text = repo["full_name"] as? String
         
-        if let owner = repo["owner"] as? [String: Any] {
-            if let imgURL = owner["avatar_url"] as? String {
-                URLSession.shared.dataTask(with: URL(string: imgURL)!) { (data, res, err) in
-                    let img = UIImage(data: data!)!
-                    DispatchQueue.main.async {
-                        self.ImgView.image = img
-                    }
-                }.resume()
-            }
+        let owner = repo["owner"] as? [String: Any]
+        if owner == nil {
+            return;
         }
         
+        if let imgURL = owner!["avatar_url"] as? String {
+            URLSession.shared.dataTask(with: URL(string: imgURL)!) { (data, res, err) in
+                let img = UIImage(data: data!)!
+                DispatchQueue.main.async {
+                    self.ImgView.image = img
+                }
+            }.resume()
+        }
     }
-    
 }
