@@ -43,7 +43,8 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         if inpTxt.count == 0 { return }
         
         guard let url = URL(string: "https://api.github.com/search/repositories?q=\(inpTxt)") else { return }
-        task = URLSession.shared.dataTask(with: url) { (data, res, err) in
+        task = URLSession.shared.dataTask(with: url) { [weak self] (data, res, err) in
+            guard let self = self else { return }
             guard let data = data else { return }
             guard let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return }
             

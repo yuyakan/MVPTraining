@@ -49,8 +49,8 @@ class ViewController2: UIViewController {
         
         guard let imgURL = owner?["avatar_url"] as? String else { return }
         guard let existImgURL = URL(string: imgURL) else { return }
-        URLSession.shared.dataTask(with: existImgURL) { (data, res, err) in
-            
+        URLSession.shared.dataTask(with: existImgURL) { [weak self] (data, res, err) in
+            guard let self = self else { return }
             guard let data = data else { return }
             if let img = UIImage(data: data){
                 DispatchQueue.main.async {
