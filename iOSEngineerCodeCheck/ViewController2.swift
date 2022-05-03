@@ -39,12 +39,9 @@ class ViewController2: UIViewController {
         
         TtlLbl.text = repo["full_name"] as? String
         
-        let owner = repo["owner"] as? [String: Any]
-        if owner == nil {
-            return;
-        }
+        guard let owner = repo["owner"] as? [String: Any] else { return }
         
-        guard let imgURL = owner?["avatar_url"] as? String else { return }
+        guard let imgURL = owner["avatar_url"] as? String else { return }
         guard let existImgURL = URL(string: imgURL) else { return }
         URLSession.shared.dataTask(with: existImgURL) { [weak self] (data, res, err) in
             guard let self = self else { return }
