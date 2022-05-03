@@ -14,8 +14,6 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     
     private var input: PresenterInput!
     
-    var task: URLSessionTask?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
