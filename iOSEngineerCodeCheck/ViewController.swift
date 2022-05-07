@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UITableViewController, UISearchBarDelegate {
 
-    @IBOutlet weak var SearchBar: UISearchBar!
+    @IBOutlet weak var SchBr: UISearchBar!
     
     private var input: PresenterInput!
     
@@ -18,8 +18,8 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         input = Presenter(output: self)
-        SearchBar.text = "GitHubのリポジトリを検索できるよー"
-        SearchBar.delegate = self
+        SchBr.text = "GitHubのリポジトリを検索できるよー"
+        SchBr.delegate = self
     }
     
     
@@ -35,14 +35,14 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        input.search(searchBarText: searchBar.text)
+        input.search(schBrTxt: searchBar.text)
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier != "Detail"{ return }
-        if let detail = segue.destination as? ViewController2 {
-            detail.repository = input.showRepository
+        if let dtl = segue.destination as? ViewController2 {
+            dtl.repo = input.showRepo
         }
     }
     
@@ -54,7 +54,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        let rp = input.row(index: indexPath.row)
+        let rp = input.row(idx: indexPath.row)
         cell.textLabel?.text = rp["full_name"] as? String ?? ""
         cell.detailTextLabel?.text = rp["language"] as? String ?? ""
         cell.tag = indexPath.row
@@ -64,7 +64,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 画面遷移時に呼ばれる
-        input.toDetailView(indexPath: indexPath)
+        input.toDetailView(idxPath: indexPath)
     }
 }
 
