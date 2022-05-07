@@ -10,11 +10,11 @@ import Foundation
 
 protocol PresenterInput {
     var numberOfItems: Int { get }
-    var showRepo: [String: Any] { get }
+    var showRepository: [String: Any] { get }
     func cancelTask()
-    func row(idx: Int) -> [String: Any]
-    func search(schBrTxt: String?)
-    func toDetailView(idxPath: IndexPath)
+    func row(index: Int) -> [String: Any]
+    func search(searchBarText: String?)
+    func toDetailView(indexPath: IndexPath)
 }
 
 protocol PresenterOutput {
@@ -25,24 +25,24 @@ protocol PresenterOutput {
 
 final class Presenter {
     private var output: PresenterOutput!
-    private var repo: [[String: Any]]
-    private var tblIdx: Int!
+    private var repository: [[String: Any]]
+    private var tableIndex: Int!
     private var task: URLSessionDataTask?
     
     init(output: PresenterOutput){
         self.output = output
-        self.repo = []
+        self.repository = []
     }
 }
 
 extension Presenter: PresenterInput{
     
     var numberOfItems: Int {
-        repo.count
+        repository.count
     }
     
-    var showRepo: [String : Any] {
-        repo[tblIdx]
+    var showRepository: [String : Any] {
+        repository[tableIndex]
     }
     
     func cancelTask() {
@@ -51,22 +51,22 @@ extension Presenter: PresenterInput{
         }
     }
     
-    func row(idx: Int) -> [String : Any] {
-        repo[idx]
+    func row(index: Int) -> [String : Any] {
+        repository[index]
     }
     
-    func search(schBrTxt: String?) {
-        guard let inpTxt = schBrTxt else { return }
-        if inpTxt.count == 0 { return }
+    func search(searchBarText: String?) {
+        guard let inputText = searchBarText else { return }
+        if inputText.count == 0 { return }
         
-        guard let url = URL(string: "https://api.github.com/search/repositories?q=\(inpTxt)") else { return }
+        guard let url = URL(string: "https://api.github.com/search/repositorysitories?q=\(inputText)") else { return }
         task = URLSession.shared.dataTask(with: url) { [weak self] (data, res, err) in
             guard let self = self else { return }
             guard let data = data else { return }
             guard let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return }
             
             if let items = obj["items"] as? [[String: Any]] {
-                self.repo = items
+                self.repository = items
                 self.output.tableReload()
             }
         }
@@ -76,8 +76,8 @@ extension Presenter: PresenterInput{
         }
     }
     
-    func toDetailView(idxPath: IndexPath) {
-        tblIdx = idxPath.row
+    func toDetailView(indexPath: IndexPath) {
+        tableIndex = indexPath.row
         self.output.performSegue()
     }
 }
