@@ -54,7 +54,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="ktq-eC-ZBq"/>
                     <connections>
-                        <outlet property="SchBr" destination="6rq-CD-Hob" id="3gq-mK-4M3"/>
+                        <outlet property="SearchBar" destination="6rq-CD-Hob" id="WNN-eD-TFn"/>
                         <segue destination="AHY-RL-7mG" kind="show" identifier="Detail" id="qqd-8W-4W1"/>
                     </connections>
                 </tableViewController>
@@ -139,13 +139,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="J6o-vL-S1z"/>
                     <connections>
-                        <outlet property="FrksLbl" destination="ZMv-4f-X2V" id="i84-sH-c5t"/>
-                        <outlet property="ImgView" destination="Iim-eb-8Ad" id="dmH-tP-ZuI"/>
-                        <outlet property="IsssLbl" destination="dzg-K8-h2L" id="L0v-sy-cD4"/>
-                        <outlet property="LangLbl" destination="s3M-QO-Kom" id="x3L-gZ-aZZ"/>
-                        <outlet property="StrsLbl" destination="0WZ-UA-R8O" id="gYb-gI-iMf"/>
-                        <outlet property="TtlLbl" destination="4q1-pG-WSB" id="UQ0-5D-rWe"/>
-                        <outlet property="WchsLbl" destination="lQC-lo-IqN" id="Drg-Jv-iUh"/>
+                        <outlet property="ForksLabel" destination="ZMv-4f-X2V" id="soS-dz-McV"/>
+                        <outlet property="ImageView" destination="Iim-eb-8Ad" id="F8I-EI-btR"/>
+                        <outlet property="IssuesLabel" destination="dzg-K8-h2L" id="GXq-12-K1K"/>
+                        <outlet property="LanguageLabel" destination="s3M-QO-Kom" id="nB4-2a-VdQ"/>
+                        <outlet property="StargazersLabel" destination="0WZ-UA-R8O" id="ndx-Be-psJ"/>
+                        <outlet property="TitleLabel" destination="4q1-pG-WSB" id="b2Q-N8-kuj"/>
+                        <outlet property="WachersLabel" destination="lQC-lo-IqN" id="KdQ-rw-CvN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rj0-Ld-RTn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

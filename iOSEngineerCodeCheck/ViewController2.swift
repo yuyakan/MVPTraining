@@ -10,18 +10,18 @@ import UIKit
 
 class ViewController2: UIViewController {
     
-    @IBOutlet weak var ImgView: UIImageView!
+    @IBOutlet weak var ImageView: UIImageView!
     
-    @IBOutlet weak var TtlLbl: UILabel!
+    @IBOutlet weak var TitleLabel: UILabel!
     
-    @IBOutlet weak var LangLbl: UILabel!
+    @IBOutlet weak var LanguageLabel: UILabel!
     
-    @IBOutlet weak var StrsLbl: UILabel!
-    @IBOutlet weak var WchsLbl: UILabel!
-    @IBOutlet weak var FrksLbl: UILabel!
-    @IBOutlet weak var IsssLbl: UILabel!
+    @IBOutlet weak var StargazersLabel: UILabel!
+    @IBOutlet weak var WachersLabel: UILabel!
+    @IBOutlet weak var ForksLabel: UILabel!
+    @IBOutlet weak var IssuesLabel: UILabel!
     
-    var repo: [String: Any] = [:]
+    var repository: [String: Any] = [:]
     
     private var input2: Presenter2Input!
         
@@ -29,18 +29,18 @@ class ViewController2: UIViewController {
         super.viewDidLoad()
         
         input2 = Presenter2(output2: self)
-        LangLbl.text = "Written in \(repo["language"] as? String ?? "")"
-        StrsLbl.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
-        WchsLbl.text = "\(repo["wachers_count"] as? Int ?? 0) watchers"
-        FrksLbl.text = "\(repo["forks_count"] as? Int ?? 0) forks"
-        IsssLbl.text = "\(repo["open_issues_count"] as? Int ?? 0) open issues"
+        LanguageLabel.text = "Written in \(repository["language"] as? String ?? "")"
+        StargazersLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
+        WachersLabel.text = "\(repository["wachers_count"] as? Int ?? 0) watchers"
+        ForksLabel.text = "\(repository["forks_count"] as? Int ?? 0) forks"
+        IssuesLabel.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
         getImage()
     }
     
     
     func getImage(){
-        TtlLbl.text = repo["full_name"] as? String
-        input2.getImage(owner :repo["owner"])
+        TitleLabel.text = repository["full_name"] as? String
+        input2.getImage(owner :repository["owner"])
     }
 }
 
@@ -48,7 +48,7 @@ extension ViewController2: Presenter2Output {
     func passImage(data: Data) {
         if let img = UIImage(data: data){
             DispatchQueue.main.async {
-                self.ImgView.image = img
+                self.ImageView.image = img
             }
         }
     }
