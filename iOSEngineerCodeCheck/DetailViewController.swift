@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController2: UIViewController {
+class DetailViewController: UIViewController {
     
     @IBOutlet weak var ImageView: UIImageView!
     
@@ -23,12 +23,12 @@ class ViewController2: UIViewController {
     
     var repository: [String: Any] = [:]
     
-    private var input2: Presenter2Input!
+    private var input: DetailViewPresenterInput!
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        input2 = Presenter2(output2: self)
+        input = DetailViewPresenter(output: self)
         LanguageLabel.text = "Written in \(repository["language"] as? String ?? "")"
         StargazersLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
         WachersLabel.text = "\(repository["wachers_count"] as? Int ?? 0) watchers"
@@ -40,11 +40,11 @@ class ViewController2: UIViewController {
     
     func getImage(){
         TitleLabel.text = repository["full_name"] as? String
-        input2.getImage(owner :repository["owner"])
+        input.getImage(owner :repository["owner"])
     }
 }
 
-extension ViewController2: Presenter2Output {
+extension DetailViewController: DetailViewPresenterOutput {
     func passImage(data: Data) {
         if let img = UIImage(data: data){
             DispatchQueue.main.async {

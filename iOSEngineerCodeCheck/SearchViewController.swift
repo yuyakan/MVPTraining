@@ -8,16 +8,16 @@
 
 import UIKit
 
-class ViewController: UITableViewController, UISearchBarDelegate {
+class SearchViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var SearchBar: UISearchBar!
     
-    private var input: PresenterInput!
+    private var input: SearchViewPresenterInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        input = Presenter(output: self)
+        input = SearchViewPresenter(output: self)
         SearchBar.text = "GitHubのリポジトリを検索できるよー"
         SearchBar.delegate = self
     }
@@ -41,7 +41,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier != "Detail"{ return }
-        if let detail = segue.destination as? ViewController2 {
+        if let detail = segue.destination as? DetailViewController {
             detail.repository = input.showRepository
         }
     }
@@ -68,7 +68,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
 }
 
-extension ViewController: PresenterOutput {
+extension SearchViewController: SearchViewPresenterOutput {
     func tableReload(){
         DispatchQueue.main.async {
             self.tableView.reloadData()

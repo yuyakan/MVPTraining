@@ -8,23 +8,23 @@
 
 import Foundation
 
-protocol Presenter2Input {
+protocol DetailViewPresenterInput {
     func getImage(owner: Any?)
 }
 
-protocol Presenter2Output {
+protocol DetailViewPresenterOutput {
     func passImage(data: Data)
 }
 
-final class Presenter2 {
-    private var output2: Presenter2Output!
+final class DetailViewPresenter {
+    private var output: DetailViewPresenterOutput!
     
-    init(output2: Presenter2Output){
-        self.output2 = output2
+    init(output: DetailViewPresenterOutput){
+        self.output = output
     }
 }
 
-extension Presenter2: Presenter2Input{
+extension DetailViewPresenter: DetailViewPresenterInput{
     
     func getImage(owner: Any?){
         
@@ -35,7 +35,7 @@ extension Presenter2: Presenter2Input{
         URLSession.shared.dataTask(with: existImgURL) { [weak self] (data, res, err) in
             guard let self = self else { return }
             guard let data = data else { return }
-            self.output2.passImage(data: data)
+            self.output.passImage(data: data)
         }.resume()
     }
 }

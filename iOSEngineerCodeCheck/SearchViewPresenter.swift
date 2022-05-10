@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol PresenterInput {
+protocol SearchViewPresenterInput {
     var numberOfItems: Int { get }
     var showRepository: [String: Any] { get }
     func cancelTask()
@@ -17,25 +17,25 @@ protocol PresenterInput {
     func toDetailView(indexPath: IndexPath)
 }
 
-protocol PresenterOutput {
+protocol SearchViewPresenterOutput {
     func tableReload()
     func performSegue()
 }
 
 
-final class Presenter {
-    private var output: PresenterOutput!
+final class SearchViewPresenter {
+    private var output: SearchViewPresenterOutput!
     private var repository: [[String: Any]]
     private var tableIndex: Int!
     private var task: URLSessionDataTask?
     
-    init(output: PresenterOutput){
+    init(output: SearchViewPresenterOutput){
         self.output = output
         self.repository = []
     }
 }
 
-extension Presenter: PresenterInput{
+extension SearchViewPresenter: SearchViewPresenterInput{
     
     var numberOfItems: Int {
         repository.count
