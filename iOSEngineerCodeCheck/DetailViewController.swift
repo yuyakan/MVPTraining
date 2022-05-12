@@ -17,7 +17,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var LanguageLabel: UILabel!
     
     @IBOutlet weak var StargazersLabel: UILabel!
-    @IBOutlet weak var WachersLabel: UILabel!
+    @IBOutlet weak var WatchersLabel: UILabel!
     @IBOutlet weak var ForksLabel: UILabel!
     @IBOutlet weak var IssuesLabel: UILabel!
     
@@ -32,7 +32,7 @@ class DetailViewController: UIViewController {
         input = DetailViewPresenter(output: self, model: model)
         LanguageLabel.text = "Written in \(repository["language"] as? String ?? "")"
         StargazersLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
-        WachersLabel.text = "\(repository["wachers_count"] as? Int ?? 0) watchers"
+        WatchersLabel.text = "\(repository["watchers_count"] as? Int ?? 0) watchers"
         ForksLabel.text = "\(repository["forks_count"] as? Int ?? 0) forks"
         IssuesLabel.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
         getImage()

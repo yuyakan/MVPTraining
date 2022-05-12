@@ -145,7 +145,7 @@
                         <outlet property="LanguageLabel" destination="s3M-QO-Kom" id="nB4-2a-VdQ"/>
                         <outlet property="StargazersLabel" destination="0WZ-UA-R8O" id="ndx-Be-psJ"/>
                         <outlet property="TitleLabel" destination="4q1-pG-WSB" id="b2Q-N8-kuj"/>
-                        <outlet property="WachersLabel" destination="lQC-lo-IqN" id="KdQ-rw-CvN"/>
+                        <outlet property="WatchersLabel" destination="lQC-lo-IqN" id="Jwe-VF-1Qy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rj0-Ld-RTn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
