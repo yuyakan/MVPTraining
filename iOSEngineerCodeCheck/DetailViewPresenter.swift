@@ -18,9 +18,11 @@ protocol DetailViewPresenterOutput {
 
 final class DetailViewPresenter {
     private var output: DetailViewPresenterOutput!
+    private var model: DetailViewModelInput
     
-    init(output: DetailViewPresenterOutput){
+    init(output: DetailViewPresenterOutput, model: DetailViewModelInput){
         self.output = output
+        self.model = model
     }
 }
 
@@ -29,13 +31,11 @@ extension DetailViewPresenter: DetailViewPresenterInput{
     func getImage(owner: Any?){
         
         guard let owner = owner as? [String: Any] else { return }
-        
-        guard let imgURL = owner["avatar_url"] as? String else { return }
-        guard let existImgURL = URL(string: imgURL) else { return }
-        URLSession.shared.dataTask(with: existImgURL) { [weak self] (data, res, err) in
+        model.fetchImage(owner: owner) {
+           [weak self] data in
             guard let self = self else { return }
-            guard let data = data else { return }
             self.output.passImage(data: data)
-        }.resume()
+        }
+        
     }
 }

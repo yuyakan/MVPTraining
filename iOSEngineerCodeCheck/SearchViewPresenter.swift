@@ -25,12 +25,13 @@ protocol SearchViewPresenterOutput {
 
 final class SearchViewPresenter {
     private var output: SearchViewPresenterOutput!
+    private var model: SearchViewModelInput
     private var repository: [[String: Any]]
     private var tableIndex: Int!
-    private var task: URLSessionDataTask?
     
-    init(output: SearchViewPresenterOutput){
+    init(output: SearchViewPresenterOutput, model: SearchViewModelInput){
         self.output = output
+        self.model = model
         self.repository = []
     }
 }
@@ -46,9 +47,7 @@ extension SearchViewPresenter: SearchViewPresenterInput{
     }
     
     func cancelTask() {
-        if let task = task {
-            task.cancel()
-        }
+        model.cancelTask()
     }
     
     func row(index: Int) -> [String : Any] {
@@ -58,21 +57,11 @@ extension SearchViewPresenter: SearchViewPresenterInput{
     func search(searchBarText: String?) {
         guard let inputText = searchBarText else { return }
         if inputText.count == 0 { return }
-        
-        guard let url = URL(string: "https://api.github.com/search/repositories?q=\(inputText)") else { return }
-        task = URLSession.shared.dataTask(with: url) { [weak self] (data, res, err) in
+        model.fetchRepository(inputText: inputText) {
+            [weak self] items in
             guard let self = self else { return }
-            guard let data = data else { return }
-            guard let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return }
-            
-            if let items = obj["items"] as? [[String: Any]] {
-                self.repository = items
-                self.output.tableReload()
-            }
-        }
-        // これ呼ばなきゃリストが更新されません
-        if let task = task {
-            task.resume()
+            self.repository = items
+            self.output.tableReload()
         }
     }
     

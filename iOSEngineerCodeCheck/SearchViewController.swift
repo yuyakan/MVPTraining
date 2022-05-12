@@ -8,20 +8,28 @@
 
 import UIKit
 
-class SearchViewController: UITableViewController, UISearchBarDelegate {
+final class SearchViewController: UITableViewController {
 
     @IBOutlet weak var SearchBar: UISearchBar!
     
     private var input: SearchViewPresenterInput!
     
+    func inject(input: SearchViewPresenterInput) {
+        self.input = input
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        input = SearchViewPresenter(output: self)
+        let model = SearchViewModel()
+        let input = SearchViewPresenter(output: self, model: model)
+        inject(input: input)
         SearchBar.text = "GitHubのリポジトリを検索できるよー"
         SearchBar.delegate = self
     }
-    
+}
+
+extension SearchViewController: UISearchBarDelegate {
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.text = ""

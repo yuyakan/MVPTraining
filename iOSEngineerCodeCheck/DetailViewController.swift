@@ -28,7 +28,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        input = DetailViewPresenter(output: self)
+        let model = DetailViewModel()
+        input = DetailViewPresenter(output: self, model: model)
         LanguageLabel.text = "Written in \(repository["language"] as? String ?? "")"
         StargazersLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
         WachersLabel.text = "\(repository["wachers_count"] as? Int ?? 0) watchers"
