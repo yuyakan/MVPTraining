@@ -12,17 +12,17 @@ final class SearchViewController: UITableViewController {
 
     @IBOutlet weak var SearchBar: UISearchBar!
     
-    private var input: SearchViewPresenterInput!
+    private var input: SearchPresenterInput!
     
-    func inject(input: SearchViewPresenterInput) {
+    func inject(input: SearchPresenterInput) {
         self.input = input
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let model = SearchViewModel()
-        let input = SearchViewPresenter(output: self, model: model)
+        let model = SearchModel()
+        let input = SearchPresenter(output: self, model: model)
         inject(input: input)
         SearchBar.text = "GitHubのリポジトリを検索できるよー"
         SearchBar.delegate = self
@@ -76,7 +76,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
-extension SearchViewController: SearchViewPresenterOutput {
+extension SearchViewController: SearchPresenterOutput {
     func tableReload(){
         DispatchQueue.main.async {
             self.tableView.reloadData()

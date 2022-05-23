@@ -23,13 +23,13 @@ class DetailViewController: UIViewController {
     
     var repository: [String: Any] = [:]
     
-    private var input: DetailViewPresenterInput!
+    private var input: DetailPresenterInput!
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let model = DetailViewModel()
-        input = DetailViewPresenter(output: self, model: model)
+        let model = DetailModel()
+        input = DetailPresenter(output: self, model: model)
         LanguageLabel.text = "Written in \(repository["language"] as? String ?? "")"
         StargazersLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
         WatchersLabel.text = "\(repository["watchers_count"] as? Int ?? 0) watchers"
@@ -45,7 +45,7 @@ class DetailViewController: UIViewController {
     }
 }
 
-extension DetailViewController: DetailViewPresenterOutput {
+extension DetailViewController: DetailPresenterOutput {
     func passImage(data: Data) {
         if let img = UIImage(data: data){
             DispatchQueue.main.async {

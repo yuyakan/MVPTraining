@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol DetailViewModelInput {
+protocol DetailModelInput {
     func fetchImage(owner: [String: Any], completion: @escaping (Data)->())
 }
 
-class DetailViewModel: DetailViewModelInput {
+class DetailModel: DetailModelInput {
     func fetchImage(owner: [String : Any], completion: @escaping (Data)->()) {
         guard let imgURL = owner["avatar_url"] as? String else { return }
         guard let existImgURL = URL(string: imgURL) else { return }

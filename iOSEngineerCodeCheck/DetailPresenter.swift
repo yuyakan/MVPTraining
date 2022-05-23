@@ -8,25 +8,25 @@
 
 import Foundation
 
-protocol DetailViewPresenterInput {
+protocol DetailPresenterInput {
     func getImage(owner: Any?)
 }
 
-protocol DetailViewPresenterOutput {
+protocol DetailPresenterOutput {
     func passImage(data: Data)
 }
 
-final class DetailViewPresenter {
-    private var output: DetailViewPresenterOutput!
-    private var model: DetailViewModelInput
+final class DetailPresenter {
+    private var output: DetailPresenterOutput!
+    private var model: DetailModelInput
     
-    init(output: DetailViewPresenterOutput, model: DetailViewModelInput){
+    init(output: DetailPresenterOutput, model: DetailModelInput){
         self.output = output
         self.model = model
     }
 }
 
-extension DetailViewPresenter: DetailViewPresenterInput{
+extension DetailPresenter: DetailPresenterInput{
     
     func getImage(owner: Any?){
         

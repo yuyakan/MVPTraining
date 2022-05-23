@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol SearchViewModelInput {
+protocol SearchModelInput {
     func cancelTask()
     func fetchRepository(inputText: String, completion: @escaping ([[String: Any]]) -> ())
 }
 
-final class SearchViewModel: SearchViewModelInput {
+final class SearchModel: SearchModelInput {
     private var task: URLSessionDataTask?
     
     func cancelTask() {
